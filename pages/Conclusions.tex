@@ -1,0 +1,11 @@
+In this work, we investigate the buildability of all snapshots of a software project. We present the buildability study of six real open source projects and create an extensible taxonomy of build failures based on the empirical results found. We propose as well a tool to easy reproduce the experiment in any project to extend this investigation.
+
+
+Analyzing build errors we noted that high percentage of them are caused by external build system errors. A deeper inspection in this category shows us that the main error is a change at build system technology along the history of the project. We can see an example of this error in Mockito project. A change of build system from Ant to Gradle is reported as a build error in 60\% of its commits with the symptom \textit{gradlew: No such file or directory}.
+
+With the proposed procedure we build all snapshots of a project using the build system indicated in the official documentation.
+But if the build system change along the history, is reasonable that build fails when it changes.
+%If we choose the correct building system for each snapshot, we would be able to improve the buildability of the project history. 
+If we analyze the errors not related with build system change, we can estimate that more than 82\% of the project history would be buildable.
+
+We believe that this study could allow and facilitate further research on related topics, such as error localization, where the identification of success builds would help us greatly.  

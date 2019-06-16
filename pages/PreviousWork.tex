@@ -1,0 +1,63 @@
+Probably the most relevant research on build errors is the empirical study by Seo et al.~\cite{Seo:2014:PBE:2568225.2568255} that examined over 26.6 million builds triggered in Google's centralized build environment.
+An error taxonomy was provided by this study based on log patterns.
+%\grex{What differs or adds our work in comparison to this one?}
+Sulir and Porub\"an examine the builds of more than 7000 Java projects, but only for their last commit~\cite{Sulir:2016:QSJ:3001878.3001882}.
+In both studies, they have performed a study \emph{in amplitude}.
+Compared to them, in this this work, we will limit the number of projects to study all their history -- our effort can thus be considered a study in depth.
+
+Rausch et al.~\cite{Rausch:2017:EAB:3104188.3104231} address the reasons why builds fail in the context of Continuous Integration (CI) environments.
+These authors extracted outputs from Travis (a CI tool) from 14 open-source projects, along with information from their public Git repositories.
+An important percentage of error outputs correspond to the tests that have not passed, but they give special importance to the cases where the failed build previous to the tests is the cause of the error.
+In addition to categorize the main errors found by the CI system, they also consider other metrics (e.g., number of authors, number of lines modified, frequency of changes, among others).
+The study contemplates the analysis of the history of the builds from the approach of continuous integration (construction of the project together with the tests).
+Our approach tries to verify what would happen if instead of taking the outputs of CI, we execute ourselves the build of the project (not considering tests) to check if all commits are able to be built (i.e., if the commit is buildable).
+Rausch et al.'s study is limited to the builds made by the CI, which do not correspond to the number of commits of the project.
+%It is therefore a line to approach to check if all the commits of a project can be built.
+
+Buildability may have a huge impact on those areas where building past commits of the project is key.
+This is the case for bug localization~\cite{Sliwerski:2005:CIF:1083142.1083147,Asaduzzaman:2012:BIC:2664446.2664463, Murgia:2010:MLA:1852786.1852794, Zimmermann:2006:MVA:1137983.1138001, Zimmermann2008}.
+When localizing bugs, techniques like git bisect may be used to traverse the project history of commits back to the past in order to find the set of lines in a commit that introduced a bug~\cite{spinellis2012git, meneely2013patch}.
+
+Some authors have emphasized the importance of historical versions to propose repair tools of failed builds~\cite{HireBuild}, or have proposed metrics to evaluate the stability of the project over time~\cite{6405296}.
+Others have addressed the problem in an indirect way.
+For instance, Just et al. found this problem when trying to run mutant tests in previous versions of several software projects~\cite{Just:2014:MVS:2635868.2635929} provided by Defects4J~\cite{Just:2014:DDE:2610384.2628055}.
+
+Reproducibility of research is a popular topic of interest among researchers to validate findings from other publications~\cite{RODRIGUEZPEREZ2018164} and projects~\cite{4693714}.
+Although much attention has been put on the availability of publicly available datasets (e.g., datasets on defect prediction~\cite{wahono2015systematic}), the software developed and used by researchers has shown to have major importance~\cite{rodriguez2012software, bruntink2014initial}.
+The software engineering research community has proposed some solutions that facilitate scientific software reproducibility in the future~\cite{DBLP:journals/corr/Weber17,DockerReproducibility2016,Boettiger:2015:IDR:2723872.2723882}.
+
+%The reproducibility of experiments in software engineering is a subject widely discussed by Juristo et al.~\cite{juristo2004improving,juristo2011role,gomez2014understanding}.
+
+
+%\grex{We have to mention Juristo's work in empirical software engineering on reproducing experiments}
+
+%Gonz{\'a}lez-Barahona and Robles note that ``reproducibility of experiments is one of the basic rules in the scientific method''~\cite{González-Barahona2012}.
+
+
+As pointed out in the introduction, a term related to buildability and very recurrent recently is build reproducibility.
+%buildability is the first step to achieve reproducibility and therefore the focus of our research.
+%Build reproducibility is the ability to generate byte-to-byte identical binaries from the source code of the project, at any point of its history, no matter who builds the binary, when or in which machine~\cite{RepBldsDebian:2018:Online}.
+%Some authors also include test in build process.
+Software distributors, such as the Debian community, have a strong interest in the reproducibility of builds~\cite{RepBlds:2017:Online,RepBldsDebian:2018:Online}.
+Ren et al. focus on reproducible builds in Debian packages~\cite{Ren:2018:ALU:3180155.3180224}.
+In it, the authors present a framework for detecting and fixing reproducible problems in Debian packages, but they focus exclusively on the latest commit, and they do not analyze the reproducibility of those packages in the past.
+Glukhova also discusses the reproducibility of Debian packages by offering tools that ensure reproducibility~\cite{Glukhova:Thesis:2017}.
+The reproducibility of builds is also interesting from a security point of view.
+Some works focus on bringing security into the software development life cycle, and they mention build reproducibility as one of the main issues to be taken into account.
+De Carn\'e de Carnavalet and Mannan mention the use of reproducible builds in the context of security-critical open source software~\cite{deCarnedeCarnavalet:2014:CIV:2664243.2664288}.
+Nikitin et al. propose a decentralized software-update framework that includes build verifiers to validate the source-to-binary correspondence~\cite{nikitin2017chainiac}.
+Al-Bassam and Meiklejohn propose a system to ensure binary transparency~\cite{10.1007/978-3-030-00305-0_8}.
+Skrimstad noted about the trust in software through reproducible builds~\cite{Skrimstad:Thesis:2018}.
+
+Build reproducibility is typically studied in stable versions of the project where a binary is available.
+We are interested in building not only the stable versions, but all project snapshots for which there is usually not binary, which allows to be used in scenarios such as bug fixing, among others.
+Thus, while a software project requires to meet additional criteria to achieve build reproducibility than to be buildable, complete historic buildability demands a software project to have many more snapshots to be buildable.
+
+%In comparison, our work addresses all versions (releases, betas and snapshots), instead of just the latest stable version.
+
+%\grex{You say there is just one work, but then refer to two}
+
+%\grex{A good idea here would be to tell how our approach differs from what has been previously done.}
+
+
+

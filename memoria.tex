@@ -1,0 +1,154 @@
+\documentclass[a4paper, 12pt, oneside]{book}
+\usepackage[a4paper, left=2.5cm, right=2.5cm, top=3cm, bottom=3cm]{geometry}
+\usepackage{times}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{xspace}
+\usepackage{float} 
+\usepackage[nottoc, notlot, notlof, notindex]{tocbibind}
+\usepackage{latexsym}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{setspace}
+\usepackage{rotating}
+\usepackage{footnote}
+
+\newcommand{\subsubsubsection}[1]{\paragraph{#1}\mbox{}\\}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\usepackage{listings}
+\usepackage{hhline}
+\lstset
+{ %Formatting for code in appendix
+	basicstyle=\fontsize{9}{11}\ttfamily,
+	escapeinside={<@}{@>},
+	showstringspaces=false,
+	tabsize=1,
+	breaklines=true,
+	breakatwhitespace=false
+}
+\usepackage{colortbl}
+	\definecolor{Gray}{gray}{0.9}
+\usepackage{color}
+\usepackage{tcolorbox}
+\tcbuselibrary{listingsutf8}
+\usepackage{enumerate}
+\usepackage{tabularx,adjustbox,booktabs}
+\usepackage{array}
+\usepackage{tcolorbox}
+
+\newcommand\setrow[1]{\gdef\rowmac{#1}#1\ignorespaces}
+\newcommand\clearrow{\global\let\rowmac\relax}
+\clearrow
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+		T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+
+\title{Why can't we build all commits of the history of a project? An empirical study}
+\author{Michel Maes Bermejo}
+
+\renewcommand{\baselinestretch}{1.5}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PORTADA
+\cleardoublepage
+\begin{titlepage}
+\begin{center}
+\begin{tabular}[c]{c c}
+\includegraphics[scale=0.6]{img/urjc-logo.jpg} &
+\end{tabular}
+
+\vspace{1cm}
+
+\Large
+MASTER EN SISTEMAS DE INFORMACI\'{O}N
+
+\vspace{0.4cm}
+
+\large
+Curso Acad\'{e}mico 2018/2019
+
+\vspace{0.8cm}
+
+Trabajo Fin de Master
+
+\vspace{2cm}
+
+\LARGE
+Why can't we build all commits of the history of a project? An empirical study
+
+\vspace{2cm}
+
+\large
+Autor : Michel Maes Bermejo \\
+Tutor : Micael Gallego Carrillo
+
+\end{center}
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%% Resumen
+%%%%%%%%%%%%%%%%%%%%
+
+\chapter*{Abstract}
+\pagenumbering{gobble}
+
+\input{pages/Abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% ÍNDICES %
+%%%%%%%%%%%%%%%%%%%%
+
+%%%% Índice de contenidos
+\tableofcontents 
+%%%% Índice de figuras
+\cleardoublepage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       1.INTRODUCCIÓN Y MOTIVACIÓN           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Introducction}
+\label{sec:intro} 
+\pagenumbering{arabic}
+\input{pages/Introduction} 
+
+\chapter{Related work}
+\label{sec:related}
+\input{pages/PreviousWork}
+
+\chapter{Methodology}
+\label{sec:metodology}
+\input{pages/Methodology}
+
+\chapter{Results}
+\label{sec:results}
+\input{pages/ExperimentalResults}
+
+\chapter{Taxonomy of failures}
+\label{sec:taxonomy}
+\input{pages/Taxonomy}
+
+\chapter{Discussion}
+\label{sec:discussion}
+\input{pages/Discussion}
+
+\chapter{Conclusions and future Work}
+\label{sec:conclusions}
+\input{pages/Conclusions}
+
+\bibliographystyle{abbrv}
+\bibliography{bibliography} 
+
+\end{document}
+
+

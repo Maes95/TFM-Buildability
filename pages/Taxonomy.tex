@@ -1,0 +1,43 @@
+Once we analyzed the results for each of the projects, we had a closer look at the different errors and create a taxonomy that could be used for any Java project and answering \textbf{RQ2}.
+
+As we mentioned in the methodology section (See Section \ref{subsec:taxonomy}), we will use the taxonomy development method of Nickerson et al.~\cite{Nickerson2013}. The objective of this section, therefore, will be to classify the errors obtained from the failed builds.
+
+First step in this methodology is to define a meta-characteristic, a starting point to define the characteristics of our taxonomy. Each characteristic should be a logical consequence of the metacharacteristic. In our case, the meta-characteristic will be "\textit{the nature of the fail}". 
+
+The objects that we will use for the development of the taxonomy were the errors obtained in the previous phase (what we called symptoms), a total of 86 errors from the 6 subject proyects. These errors have been randomly divided into 5 groups of 17-18 errors. Five iterations have been carried out using the method, the results of which are shown below:
+
+\begin{enumerate}[\bfseries {I}ter{a}t{i}on 1]
+	
+	%\vspace{3mm}
+	\item For this iteration a \textit{conceptual-to-empirical} approach has been used, using as a starting point a previous taxonomy, \textit{Build Errors: A Case Study}~\cite{Seo:2014:PBE:2568225.2568255}, from which we take the types of errors \textit{Semantic} (Not override a superclass or interface method when use override annotation, incompatible types, not suitable method \dots), \textit{Syntax} (keywords expected, illegal start of expression, statement expected, parsing XML files~\dots) and \textit{Dependency} (can not import this package, could not resolve a library or a version of it \dots), which are common in Java proyects. Since these types do not cover all objects, it is necessary to switch to an empirical approach and add two new types: \textit{Encoding} (using bad encoder for strings) and \textit{Build System} (any problem related to de execution of the build system technology). The taxonomy resulting from this iteration is: \textit{$T_{1}$ = {Type(Build System, Dependency, Encoding, Semantic, Syntax)}}.
+	
+	\vspace{2mm}
+	\item For this iteration a \textit{empirical-to-conceptual} approach has been used. In this iteration, all objects are classified with the current taxonomy, so there is no need to expand it. The taxonomy resulting from this iteration is: \textit{$T_{2}$ = {Type(Build System, Dependency, Encoding, Semantic, Syntax)}}.
+	
+	\vspace{2mm}
+	\item For this iteration a \textit{conceptual-to-empirical} approach has been used. When no new types are detected in last iteration, the use of another dimension of the objects is explored. In the development of an application, we can find that we have made mistakes in the source code, in the configuration or the error is external. This new dimension, the location, could take the following values: Source code, config files or external. Applying this new dimension on the objects of this iteration, all are classified within the domain of the new dimension. No new types arise. The taxonomy resulting from this iteration is: \textit{$T_{3}$ = {Type(Build System, Dependency, Encoding, Semantic, Syntax), Location(Source code, Config files, External) }}.
+	
+	\vspace{2mm}
+	\item For this iteration a \textit{empirical-to-conceptual} approach has been used. From the logs of this iteration, we find that the taxonomy is insufficient and it is necessary to extend it. The type Enviroment (problems in the execution environment) is added. The taxonomy resulting from this iteration is: \textit{$T_{4}$ = {Type(Build System, Dependency, Encoding, Enviroment, Semantic, Syntax), Location(Source code, Config files, External) }}.
+	
+	\vspace{2mm}
+	\item For this iteration a \textit{empirical-to-conceptual} approach has been used. In this iteration, all objects are classified with the current taxonomy, so there is no need to expand it. The taxonomy resulting from this iteration is: \textit{$T_{5}$ = {Type(Build System, Dependency, Encoding, Enviroment, Semantic, Syntax), Location(Source code, Config files, External) }}.
+\end{enumerate}          
+
+In figure~\ref{fig:taxonomyTree} we can see the final taxonomy. The classification of the errors made is summarised by project in table \ref{table:taxonomyResults}.
+
+\begin{figure}[h!]
+	\begin{center}
+		\includegraphics[width=11cm]{img/Taxonomy}
+		\caption{Developed taxonomy of software build errors}
+		\label{fig:taxonomyTree}
+	\end{center}
+\end{figure}
+
+\input{pages/TaxonomyTable}
+
+\vspace{0.3cm}
+\begin{tcolorbox}[fonttitle=\bfseries,title=Answer to RQ2: What are the most common problems that cause
+	snapshot build fail?,label=rq2,colframe=blue!50!black]
+	Considering the taxonomy made and the errors classified in it, we can conclude that the most common errors we find when building the snapshot of a Java project are due to the Build System (79.78\%), to the semantics of the language (8.00\%) and to the dependencies of the project (7.36\%). Other less common errors are related to the environment (3.45\%), encoding (1.39\%) and syntax (0.02\%).
+\end{tcolorbox}

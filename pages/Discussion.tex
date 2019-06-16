@@ -1,0 +1,85 @@
+This section discusses implications of the experimental results, the observations from our study on buildability and the proposed taxonomy, followed by an approximation of mitigation measures. In addition, it discusses limitations and threats to validity.
+
+\section{Implications of experimental results}
+
+First, we expected the projects to have a stable build history (all of them are Open Source libraries), with some points in the past where the project could not be built. This idea has only materialized in the Closure project. In the rest of the projects we have found a common problem, a change in the build system of the project, which considerably reduces the number of buildable commits. The main disadvantage of pre-setting the construction system and assuming that it will not vary significantly affects the study, but at the same time gives us valuable information about the evolution of the projects and how we must adapt.
+
+Running the experimentation required a significant investment of time and resources. It was necessary to run the experiment on isolated machines (one per project) that were running for several days sequentially executing the builds of each project. Some measures to mitigate the amount of time required were the elimination of tasks at build process that did not directly affected the project, such as the generation of automatic documentation or the execution of tests, which was not considered within the scope of the experiment. In some projects, as in the case of Spring Framework, there was the problem of Maven Central (from where dependencies are downloaded) banning the IP of the machine as a result of an abuse of the API, that externally prevented the correct build of the project, having to limit the number of builds per time to avoid it.
+
+\section{Implications of proposed taxonomy}
+
+The taxonomy developed in this work proposes a high-level classification easily extensible that collects the types of errors and their location in the project. The taxonomy was intended to be an answer to RQ2, but we found that this is only one dimension within the most exhaustive classification that can be carried out. We introduce the dimension of the location of the error (in which place of the project it occurs -- or if it occurs outside of it-- ). Other dimensions not included but possible could be the involvement of the developer (complex in some cases due to the lack of knowledge of the development phase) in the error or the difficulty of its solution (it can be subjective).
+
+Most of the problems we find in the construction of a project are not affected by the compilability of the project, so they would be extendable to the scope of dynamic languages
+
+%Providing a categorization of errors empirically is not easy. We must leave any preconceived ideas of what the problems will be like to stick only to the results. Initially, we found all built problems unclassified, we only knew where were they localized in the history of commits. By grouping together problems related to consecutive commits we found that usually the build failures were produced by the same problem. Once grouped, it was enough to choose a failed build, check its log and extract the pattern that identified it to apply it again to all the failed builds. This process was repeated until there was no unclassified failed builds. The patterns had to be generic enough to be able to capture different variants of the same error, but in some cases it was necessary to particularize the error in order to get the specific classification.
+
+%Common patterns were found for the different Java projects, independent of the build system used, such as
+
+%\begin{lstlisting}
+%	error: (.+)\n(.+)
+%\end{lstlisting}
+
+%which classifies the errors derived from the compilation of Java code and in turn allows subcategories based on their variants, for example
+
+%\begin{lstlisting}
+%	error: incompatible types
+%\end{lstlisting}
+
+%These cases strengthen our choice of Java as a technology on which to investigate buildability: the structured logs provided by the compiler and build systems allowed us to make a simple and automated tracking of errors.
+
+\section{Mitigation measures}
+
+While we were doing the taxonomy, we realize that some of the problems we encountered could be easily solved to achieve a successful build and others were more complicated or unfeasible.
+
+Some generic solutions, that requires changes in the configuration or in the command launched by the project but not in the source code itself, follows:
+
+\begin{itemize}
+	\item \textbf{Build system change} Detect which technology is being used to build the project to use the most convenient one in each case (search pom.xml for Maven, build.xml for Ant, and so on)
+	\item \textbf{Encoding problem} If it does not exist, add the property encoding in the project configuration file.
+	\item \textbf{Dependency problem} If a dependency is a SNAPSHOT, look for the compatible version that is stable and recoverable from the dependency repository. Replace this dependency with the stable one in the configuration before executing the build.
+	\item \textbf{Environment problem} Check the resource requirements of the project.
+\end{itemize}
+
+For the following problems, the solution is usually not trivial or cannot easily be automated:
+
+\begin{itemize}
+	\item \textbf{Java compilation issue: Syntax and semantic} Requires modification of the source code of the project.
+	\item \textbf{Build configuration issues} Requires a deep knowledge of how the project is built.
+\end{itemize}
+
+These problems are usually specific code errors that do not affect too many versions, because the developers often correct them quickly.
+
+\section{Limitations and Threats to Validity}
+
+The validity of our work is described in terms of the four main threats to validity in empirical software engineering research: construct, internal and external validity~\cite{Wohlin2012} (excluding statistical conclusion validity that does not apply to our problem).
+
+% Construct validity: Does the treatment correspond to the actual cause we are interested in? Does the outcome correspond to the effect we are interested in?
+
+\textbf{Construct validity} 
+The results of the analysis corresponding to the RQ1 are affected essentially by the construction system of the project, so that a large number of fail builds of the projects may be hiding other causes of errors. We believe that an undocumented change in the way the project is built is a cause of error in itself.
+
+%\hspace{5px}
+
+% Internal validity: Did the treatment/change we introduced cause the effect on the outcome? Can other factors also have had an effect?
+
+\textbf{Internal validity} Threats to internal validity relate to the experimenter; taxonomy has been made from empirical data (the logs of the failure builds) under the interpretation of a single researcher who performed the analysis. On the other hand, a well-documented taxonomy methodology has been used along with conceptual approaches in some of the iterations, specifically using in one of them the previous knowledge of taxonomy of errors in Java projects from another work.
+
+%\hspace{5px}
+
+% External validity, Transferability Is the cause and effect relationship we have shown valid in other situations? Can we generalize our results? Do the results apply in other contexts?
+
+%\noindent
+\textbf{External validity} A general threat to external validity is the representativeness of the selected subjects. In this study we use open source projects, which could not be representative of other software projects. However, we think we took this issue into consideration by including the Spring Framework project, which is a huge project heavily used in the industry, which is a good representative of a big project. 
+
+% Conclusion validity: Does the treatment/change we introduced have a statistically significant effect on the outcome we measure?
+
+%\textbf{Conclusion validity}  
+
+%\grex{Include a sentence about construct and conclusion validity (related to how sure the conclusions reached in regards to the relationships in our data are reasonable.)}
+
+
+
+
+
+

@@ -1,0 +1,80 @@
+%This research started as a \emph{side effect} of another investigation that we were carrying out.
+
+To find out whether regression tests, created when a bug is fixed in a project, could help to analyze the \emph{origin} of that bug, we intended to run the test on past versions of the software.
+The snapshot (commit) where the test fails would be the candidate for being the bug-introducing change~\cite{kim2006automatic}.
+To do this, it was necessary to first build and then run the regression test on the previous snapshots of the project.
+We found, however, that many of the snapshots were not buildable.
+
+The dataset we used was the same as the one we were going to do in this study, Defects4J~\cite{Just:2014:DDE:2610384.2628055}.
+Exploring other investigations that made use of this same dataset, we identified another study that had the same problems trying to build some snapshots~\cite{Just:2014:MVS:2635868.2635929}.
+The authors decided to discard from their study those that did not build.
+We discovered that in some cases it was possible to fix some of the build failures.
+However, the diversity of errors motivated us to make a deeper analysis in the different projects, studying how buildable the snapshots were, and to create a taxonomy to understand and classify the most recurrent errors.
+
+We are not the only ones interested in such an endeavor.
+Both industrial software developers and software engineering researchers have shown interest in rebuilding past snapshots of projects~\cite{nikitin2017chainiac, RepBlds:2017:Online}, and do it in their day-to-day work.
+Rebuilding the past snapshots of a software project is done with different objectives in mind, among others:
+
+\begin{itemize}
+	\item \textbf{{To search and find bugs}}: In line with our original intention, software developers often run previous snapshots of the system in order to localize bugs and understand how they originated~\cite{Zimmermann:2006:MVA:1137983.1138001}.
+	\item \textbf{{Due to security reasons}}: Users usually trust the available binaries of a library, but a backdoor could be inserted~\cite{deCarnedeCarnavalet:2014:CIV:2664243.2664288}.
+Rebuilding a library version from the original source allows to compare the binaries to verify that no new code has been introduced.
+	\item \textbf{{To backport bug fixes}}: To apply a patch or an update to an older version of the software, it is necessary to be able to build that specific version~\cite{tian2017mining}.
+	\item \textbf{{To reproduce the past state of a system}}: For research, it is often useful to obtain a functional binary/executable to verify the correct performance of the system~\cite{manacero2011using}.
+	The use of the project history is also useful to predict future bugs~\cite{Zimmermann2008}.
+\end{itemize}
+
+%\grex{I don't understand why we put the `desirable features' here... this is something very specific that belongs to the method section or when we are presenting the case studies.}
+
+
+% In the literature, build reproducibility is the ability to generate byte-to-byte identical binaries from the source code of the project, at any point of its history, no matter who builds the binary, when or in which machine~\cite{RepBldsDebian:2018:Online}.
+
+Sulir and Porub\"an~\cite{Sulir:2016:QSJ:3001878.3001882} consider, in the context of projects created with compilable languages, the build process to be composed of the following steps:
+
+\begin{enumerate}
+	\item read the project build file
+	\item download third party components defined in the build file
+	\item execute the compiler to generate  binary files from source code, and
+	\item package the program in a suitable format for deployment.
+\end{enumerate}
+
+For them, a specific project version is {\bf buildable} if these steps can be executed to generate a valid binary.
+A related term is {\bf build reproducibility}, which is \emph{the ability to generate byte-to-byte identical binaries from the source code of a project version, no matter who builds the binary, when or in which machine}~\cite{RepBldsDebian:2018:Online}.
+Reproducible builds create thus a verifiable path from human readable source code to the binary code used by computers, and are gaining relevance in recent times~\cite{cito2017empirical, maudoux2018correct}, in particular, but not limited, in relation to Blockchain technologies~\cite{deCarnedeCarnavalet:2014:CIV:2664243.2664288, perry2014reproducible}.
+It should be noted that to generate a reproducible build from a specific version of a project, first that version should be buildable, and then additional conditions have to be met.
+Build reproducibility may be pursued when security is a key characteristic, but there are many scenarios --as those pointed out above-- where having \emph{just} buildability should be \emph{enough}.
+
+We define the {\bf buildability of a project} as \emph{the ability to build a project from its sources}.
+Buildability is essential for any software project, as it has to be run.
+In this work, we argue that buildability should not be limited to the current (i.e., latest) version of a software, but to all its history (or at least part of it) -- we refer to this ability as {\bf historic buildability}, and in particular to {\bf complete historic buildability} when \emph{all past versions of a software project can be built}.
+
+Ideally, a version successfully built in the past should be built successfully nowadays.
+However, the evolving nature of software has as a (non-intended) consequence that this is not always the case.
+We have studied the buildability of the history of several projects checking if their snapshots are buildable or not.
+We have focused on six well-known open source Java projects.
+Five are taken from the Defects4J repository~\cite{Just:2014:DDE:2610384.2628055}, commonly used in Software Engineering research.
+The other one is the Spring Framework project~\cite{Spring:2019:Online}, a big open source project commonly used in the industry for building web applications.
+Specifically, this work tries to answer following research questions:
+
+\begin{itemize}
+	\item \textbf{RQ1}: Can we build all snapshots of a project? 
+    This research question will shed some light into how \emph{historic buildable} software projects are. We consider a build as successful if a snapshot is buildable, and a fail if not.
+	\item \textbf{RQ2}:  What are the most common problems that cause snapshot build fail?
+    In addition to determine what problems prevent snapshots to be buildable, we propose a classification of the problems into different categories.
+\end{itemize}
+
+The contributions of this paper are following:
+    
+\begin{enumerate}
+	\item To the best of our knowledge, this is the first work to address the buildability of all the snapshots of a project.
+	\item We propose simple and generic tools to check the buildability of a project's history, and analyze the problems that make a snapshot build fail.
+	\item We propose a taxonomy of build failures with an empirical base.
+	\item We provide the extension of a previous dataset~\cite{Just:2014:DDE:2610384.2628055} including the history of buildable snapshots and the logs in the case in which they were not buildable for the projects studied.
+\end{enumerate}
+
+The work is structured as follows:
+Previous work is presented in Section~\ref{sec:related}.
+Subject project, tools and methodology is presented in Section~\ref{sec:metodology}.
+Section~\ref{sec:results} and Section~\ref{sec:taxonomy} answer the research questions.
+In Section~\ref{sec:discussion} we discuss about the work carried in this work.
+Finally, Section~\ref{sec:conclusions} concludes the work.

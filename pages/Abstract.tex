@@ -1,0 +1,15 @@
+%Context: 
+The buildability of a software project is the ability to build it from its sources. 
+Buildability has been usually studied only in stable points of its history (in general, its releases / versions).
+But it may be also useful to study buildability for all past snapshots (i.e., all past states of the system after a commit) of a project, for instance for a security audit or to search for bugs.
+%Goal:
+In this work we analyze the buildability of all snapshots of six open source projects, and categorize the problems that occur during this process and that make the software projects be not-buildable.
+%Method:
+For this we try to build all past snapshots of the projects under study, analyze how many of them we are able to build and record the output if the build process fails.
+Based on an analysis of the failing builds, we propose a taxonomy of failures.
+%Results:
+In average, more than 50\% of the snapshots of the projects under study are not buildable.
+The main problem we find (80\% of fails) is related to the change of technology in the build system in the history of the project, followed by semantic problems (8\%) and dependency problems (7\%).
+%Conclusion:
+Analyzing the root causes of failing snapshots, we estimate that using the correct build system along the history, we could reduce the number of not-buildable snapshots from 50\% to 17\% of the total.
+
