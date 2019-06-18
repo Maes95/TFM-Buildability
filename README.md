@@ -4,3 +4,5 @@
 
 ```Tools/``` folder contains all necesary code to reproduce the experiment
 
+```Taxonomy/``` folder contains all necesary code to reproduce the taxonomy
+
