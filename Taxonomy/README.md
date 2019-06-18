@@ -13,13 +13,13 @@
     * **Medium** -> Insufficient trace information, you should goto project’s notebook to inspect the full log. Navigate in Jupyter Notebook’s page to ```/bugs/analysis/_notebooks/``` and open the project. Go Kernel>Restart and Run All in menu. Find this line: ```pa.view_log_by_hash(errors,<hash_id>, 0)``` and replace ```<hash_id>``` with the corresponding hash in table to see the log (pressing enter in the cell).
     * **Hard** -> Follow *Medium* steps and you see an output like this:
 
-        ```Total commits: 1 | Current commit: 8f4b1746 | Log:```
+        ```Total commits: N | Current commit: <hash_id> | Log:```
     
-    Copy commit hash and go to Docker container:
-    * ```cd bugs/projects/<project>```
-    * ```git checkout -f <commit_hash>```
-    * Build project: ```../../configFiles/BuildFiles/build-<project>.sh```
-    * See output. Use ```--stacktrace``` to get more info.
+        Copy commit hash and go to Docker container:
+        * ```cd bugs/projects/<project>```
+        * ```git checkout -f <commit_hash>```
+        * Build project: ```../../configFiles/BuildFiles/build-<project>.sh```
+        * See output. Use ```--stacktrace``` to get more info.
 
 
 ## Notes:
