@@ -24,13 +24,13 @@ Following Easterbrook \emph{et al.}~\cite{easterbrook2008selecting}, we selected
 For this purpose, we selected projects written in Java, a static typed programming language that is platform-independent, with a freely available compiler.
 Java has also backward compatibility and multiple tools to manage dependencies like Maven, Gradle or Ant.
 In order to study the buildability of a project, the history of the projects needs to be available through some source control management (SCM) system.
-The selected projects are available in git repositories, so we used git to traverse their history.
+The selected projects are available in Git repositories, so we used Git to traverse their history.
 
 Table~\ref{table:projects} shows the six open source Java projects selected for the study.
 For each project, we display the number of snapshots (commits) that are available in their respective git repositories, and the build system used by the project to compile the source code and generate the binaries.
 Five projects come from a common dataset in software research, Defects4J~\cite{Just:2014:DDE:2610384.2628055}.
 These projects are commonly used for research in Software Testing.
-It is important to note that they are small projects with a limited set of dependencies\ref{table:projects}.
+It is important to note that they are small projects with a limited set of dependencies.
 The only exception is the Closure project, with 12 dependencies, which are included in the source code without the need to recover them from an external repository.
 
 %\grex{Could we have the number of dependencies as well? As I suppose they vary over time, it would be good to provide a range of the number of dependencies.}
@@ -126,7 +126,6 @@ We then group similar patterns together, in order to identify those logs that sh
 For each symptom that we find, a \textbf{cause} (i.e., the error that causes the symptom) can potentially be attributed to it.
 The cause, in many cases and due to the Java logging system, can be extracted together with the symptom.
 In other cases, the cause is more ambiguous and requires interpreting the log along with the failed version of the project, exploring it in detail (sometimes at a very low-level).
-In the most difficult cases, the authors met to review and discuss until they reached an agreement.
 In a next step, our intention is to categorize the error according to its nature using a method for taxonomy development.
 
 %Once the cause is determined, we assess \textbf{if the error could be solved} by applying a change -- or if it is unsolvable.
@@ -139,7 +138,7 @@ In this case, an error pattern is applied to the log obtained after a failed exe
 % \textcolor{black}{Pattern: }
 \begin{center}
 	\begin{lstlisting}[linewidth=\linewidth, caption={SpringFramework Log - Commit 8961}, captionpos=b, label={listing:pattern}]
-	<@\textbf{Pattern: }@><@\textbf{\textcolor{violet}{Could not find (.+)}}@>m
+	<@\textbf{Pattern: }@><@\textbf{\textcolor{violet}{Could not find (.+)}}@>
 	<@\textbf{Log with pattern matching: }@>
 	FAILURE: Build failed with an exception.
 	
@@ -198,9 +197,6 @@ The method allows us to combine both empirical-to-deductive and deductive-to-emp
 In our case, the objects to be classified to obtain the taxonomy will be the causes, using the symptoms to classify them.
 The classification will be done iteratively, using in each iteration a portion of the sample of symptoms obtained.
 The ending condition will be that all the symptoms obtained have been classified, in addition to the objective ending conditions that the method defines.
-Subjective ending conditions raised by the method will be discussed in Section~\ref{sec:discussion} (Discussion).
-
-%\grex{Here we should talk a little bit about how we classify to answer RQ2}
 
 
 

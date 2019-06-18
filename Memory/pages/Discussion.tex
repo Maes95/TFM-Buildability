@@ -35,7 +35,7 @@ While we were doing the taxonomy, we realize that some of the problems we encoun
 Some generic solutions, that requires changes in the configuration or in the command launched by the project but not in the source code itself, follows:
 
 \begin{itemize}
-	\item \textbf{Build system change} Detect which technology is being used to build the project to use the most convenient one in each case (search pom.xml for Maven, build.xml for Ant, and so on)
+	\item \textbf{Build system change} Detect which technology is being used to build the project to use the most convenient one in each case (search pom.xml for Maven, build.xml for Ant, etc).
 	\item \textbf{Encoding problem} If it does not exist, add the property encoding in the project configuration file.
 	\item \textbf{Dependency problem} If a dependency is a SNAPSHOT, look for the compatible version that is stable and recoverable from the dependency repository. Replace this dependency with the stable one in the configuration before executing the build.
 	\item \textbf{Environment problem} Check the resource requirements of the project.
