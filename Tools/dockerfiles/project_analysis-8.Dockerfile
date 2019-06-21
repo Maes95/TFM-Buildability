@@ -50,5 +50,5 @@ EXPOSE 8888
 
 CMD ["bash"]
 
-# BUILD docker build -f dockerfiles/extract-java-8.Dockerfile -t maes95/project_analysis:java-8 .
+# BUILD docker build -f dockerfiles/project_analysis-8.Dockerfile -t maes95/project_analysis:java-8 .
 # RUN docker run --rm -it -p 8888:8888 -v $PWD/analysis:/home/bugs/analysis maes95/project_analysis:java-8 bash 

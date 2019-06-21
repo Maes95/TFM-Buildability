@@ -1,0 +1,1 @@
+docker run --rm -it -p 8888:8888 -v $PWD/analysis:/home/bugs/analysis maes95/project_analysis:java-8 bash

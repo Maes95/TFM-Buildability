@@ -29,17 +29,14 @@ We will build the projects in all the versions that repository provides to check
 Clone the project repo:
 
 ```
-  git clone https://gitlab.com/urjc-softdev/bugs.git
+  git clone https://github.com/Maes95/TFM-Buildability.git
   cd bugs/
 ```
 
 Run container:
 
 ```
-docker run --rm 
-  -v $PWD/analysis:/bugs/analysis \
-  -w /bugs buildableprojects/extract_process:java-<java_version> \
-  bash 
+  docker run --rm -it -p 8888:8888 -v $PWD/analysis:/home/bugs/analysis maes95/project_analysis:java-<java_version> bash
 ```
 
 - Replace <java_version> with '7' for proyects Closure, Lang, Math and Time. 
@@ -57,7 +54,7 @@ docker run --rm
 Clone the project repo:
 
 ```
-  git clone https://gitlab.com/urjc-softdev/bugs.git
+  git clone https://github.com/Maes95/TFM-Buildability.git
   cd bugs/
 ```
 
@@ -78,7 +75,7 @@ Download repos from git and Defects4J:
 To check build history from a project (using bash terminal on your machine or inside docker container):
 
 ```
-python3 py/checkBuildHistory.py configFiles/CheckBuildHistoryFiles/<project>-experiment<n>-config.json
+  python3 py/checkBuildHistory.py configFiles/CheckBuildHistoryFiles/<project>-experiment<n>-config.json
 ```
 
 ##### **IMPORTANT**: The experiment for each project can take several hours or days, depending of your machine. All results to realize the analysis are provided in this repo.
@@ -86,7 +83,7 @@ python3 py/checkBuildHistory.py configFiles/CheckBuildHistoryFiles/<project>-exp
 For example (assuming analysis/Lang/experiment_1/ doesn't exist):
 
 ```
-python3 py/checkBuildHistory.py configFiles/CheckBuildHistoryFiles/Lang-experiment1-config.json
+  python3 py/checkBuildHistory.py configFiles/CheckBuildHistoryFiles/Lang-experiment1-config.json
 ```
 
 This will create new folder `analysis/Lang/experiment_1/` with the following files/subfolders:
@@ -118,14 +115,14 @@ Once all commits was checked, we could analyce the results using a JupyterNotebo
 
 #### :whale: Using Docker 
 
-- Run with exiting results
+- Run with exiting results (unzip gona re-write and DELETE all previous results in `analysis/`)
 ```
-  docker run -it -p 8888:8888 buildableprojects/analysis_process:java-<java_version>
+  unzip analysis_complete.zip 
+  docker run --rm -it -p 8888:8888 -v $PWD/analysis:/home/bugs/analysis maes95/project_analysis:java-<java_version> bash
 ```
 - Run with current results (at `analysis/` folder)
 ```
-  docker build --tag buildableprojects/analysis_process:java-<java_version> .
-  docker run -it -p 8888:8888 buildableprojects/analysis_process:java-<java_version>
+  docker run --rm -it -p 8888:8888 -v $PWD/analysis:/home/bugs/analysis maes95/project_analysis:java-<java_version> bash
 ```
 
 - Replace <java_version> with '7' for proyects Closure, Lang, Math and Time. 
@@ -133,7 +130,7 @@ Once all commits was checked, we could analyce the results using a JupyterNotebo
 
 Inside container, run:
 ```
-./runJupyterNotebook.sh
+  ./runJupyterNotebook.sh
 ```
 
 This allow you to see (from console) the full log file and re-run specific snapshot from any project.
@@ -148,7 +145,7 @@ This allow you to see (from console) the full log file and re-run specific snaps
 Run at console (in project directory):
 
 ```
-jupyter-notebook
+  jupyter-notebook
 ```
 
 ## Run
