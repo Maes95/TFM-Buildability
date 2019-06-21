@@ -4,10 +4,6 @@ FROM openjdk:8
 RUN apt-get update
 RUN apt-get -y install build-essential
 
-# Install python 3
-
-RUN apt-get -y install python3
-
 # Install Maven
 
 RUN apt -y install maven
@@ -19,22 +15,40 @@ RUN git clone https://github.com/rjust/defects4j
 RUN ./defects4j/init.sh
 ENV PATH="/defects4j/framework/bin:${PATH}"
 
+# Install conda
+RUN wget --quiet https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh -O ~/anaconda.sh && \
+    /bin/bash ~/anaconda.sh -b -p /opt/conda && \
+    rm ~/anaconda.sh && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc
+
+ENV PATH /opt/conda/bin:$PATH
+
+RUN /opt/conda/bin/conda install jupyter -y --quiet 
+
 # Download projects
 
-RUN mkdir bugs/
-RUN mkdir bugs/projects/
-RUN git clone https://github.com/spring-projects/spring-framework.git bugs/projects/spring-framework/
-RUN defects4j checkout -p Mockito -v 1b -w bugs/projects/Mockito/
+WORKDIR /home/bugs/
+
+RUN mkdir projects/
+RUN git clone https://github.com/spring-projects/spring-framework.git projects/spring-framework/
+RUN defects4j checkout -p Mockito -v 1b -w projects/Mockito/
 
 # Copy source files
 
-COPY py/ bugs/py/
+COPY py/ py/
 
 # Copy config files
 
-COPY configFiles/ bugs/configFiles/
+COPY configFiles/ configFiles/
+
+# Set up Nootebook script
+RUN echo "/opt/conda/bin/jupyter notebook --notebook-dir=/home/bugs/analysis/_notebooks --ip='0.0.0.0' --port=8888 --no-browser --allow-root &" >  runJupyterNotebook.sh 
+RUN chmod +x runJupyterNotebook.sh
+EXPOSE 8888
 
 CMD ["bash"]
 
-# BUILD docker build -f dockerfiles/extract-java-8.Dockerfile -t buildableprojects/extract_process:java-8 .
-# RUN docker run --rm -v $PWD/analysis:/bugs/analysis -w /bugs buildableprojects/extract_process:java-8 python3 py/checkBuildHistory.py configFiles/CheckBuildHistoryFiles/Spring-experiment1-config.json
+# BUILD docker build -f dockerfiles/extract-java-8.Dockerfile -t maes95/project_analysis:java-8 .
+# RUN docker run --rm -it -p 8888:8888 -v $PWD/analysis:/home/bugs/analysis maes95/project_analysis:java-8 bash 
