@@ -1,0 +1,145 @@
+The steps defined below to reproduce the taxonomy development process is based on the taxonomy development method developed by Nickerson et al.~\cite{Nickerson2013}.
+
+\section{Set Up:}
+
+\begin{enumerate}
+	\item
+	Create your own copy of taxonomy template (use
+	\texttt{Taxononomy-Template.xslx}, published in the public repository of this work~\footnote{\url{https://github.com/Maes95/TFM-Buildability/tree/ReproducePackage/Taxonomy}})
+	\item
+	Download and run the Docker image with all results (take a bit time to
+	download):
+	\texttt{docker\ run\ -\/-rm\ -it\ -p\ 8888:8888}\\
+		\hspace*{1cm} \texttt{-v\ \$PWD/analysis:/home/bugs/analysis}\\
+		\hspace*{1cm} \texttt{maes95/project\_analysis:java-\textless{}java\_version\textgreater{}\ bash}
+	\item
+	Inside Docker container, run: \texttt{./runJupyterNotebook.sh}
+	\item
+	Open: \texttt{http://localhost:8888} and enter the token that you see
+	in terminal to set up Jupyter Notebook.
+	\item
+	There are 3 levels of difficulty when you examine a trace:
+	
+	\begin{itemize}
+		\item
+		\textbf{Easy} -\textgreater{} You can get Dimensions/Characteristics
+		just from trace
+		\item
+		\textbf{Medium} -\textgreater{} Insufficient trace information, you
+		should goto project's notebook to inspect the full log. Navigate in
+		Jupyter Notebook's page to \texttt{/bugs/analysis/\_notebooks/} and
+		open the project. Go Kernel\textgreater Restart and Run All in menu.
+		Find this line:
+		\texttt{pa.view\_log\_by\_hash(errors,\textless{}hash\_id\textgreater{},\ 0)}
+		and replace \texttt{\textless{}hash\_id\textgreater{}} with the
+		corresponding hash in table to see the log (pressing enter in the
+		cell).
+		\item
+		\textbf{Hard} -\textgreater{} Follow \emph{Medium} steps and you see
+		an output like this:
+		
+		\texttt{Total\ commits:\ N\ \textbar{}\ Current\ commit:\ \textless{}hash\_id\textgreater{}\ \textbar{}\ Log:}
+		
+		Copy commit hash and go to Docker container:
+		
+		\begin{itemize}
+			\item
+			\texttt{cd\ bugs/projects/\textless{}project\textgreater{}}
+			\item
+			\texttt{git\ checkout\ -f\ \textless{}commit\_hash\textgreater{}}
+			\item
+			Build project:
+			\texttt{../../configFiles/BuildFiles/build-\textless{}project\textgreater{}.sh}
+			\item
+			See output. Use \texttt{-\/-stacktrace} to get more info.
+		\end{itemize}
+	\end{itemize}
+\end{enumerate}
+
+\section{Notes}
+
+\begin{itemize}
+	\item
+	You gona see in template 3 tabs, go to tab 3 \emph{Iteration 1}.
+	\item
+	There are 86 log traces divided into 5 groups, corresponding to the 5
+	iterations.
+	\item
+	For each iteration it is possible to use a conceptual (use previous
+	knowledge of the domain) or empirical (only use the data) approach.
+	\item
+	In base paper, they formally \textbf{define taxonomy as a set of
+		dimensions}. Each dimension exiconsists of 2 or more characteristics:
+	
+	\begin{itemize}
+		\item
+		An object to be classified cannot have two different characteristics
+		in one dimension (mutual exclusive restriction).
+		\item
+		Each object must have one of the characteristics of a dimension
+		(collectively exhaustive restriction)
+	\end{itemize}
+	\item
+	In paper, they \textbf{define attributes} of a good taxonomy:
+	
+	\begin{itemize}
+		\item
+		It's concise -\textgreater{} Not too many dimensions, the researcher
+		must be able to have them in his head.
+		\item
+		It is robust -\textgreater{} It has a minimum number of dimensions
+		that allow you to clearly separate objects.
+		\item
+		It is complete -\textgreater{} Classifies all objects within the
+		domain Extendable -\textgreater{} Allows to include new dimensions
+		when new objects appear
+		\item
+		It's explanatory -\textgreater{} Allows you to easily classify an
+		object without having all the details of it.
+	\end{itemize}
+	\item
+	In paper, they \textbf{define a series of End conditions}, which are
+	the requirements to end a taxonomy. These can be objective (they are
+	clearly defined in Table 2 of the paper) or subjective (the researcher
+	estimates that the attributes cited above* have been satisfied).
+	\item
+	In paper, they \textbf{define the concept of meta-characteristic}, a
+	highly understandable characteristic that gives rise to other
+	characteristics. By way of example they propose the need to create a
+	taxonomy of ``mobile applications'' and the meta-characteristics would
+	be ``Interaction at high level between the user and the application'',
+	where a dimension from this would be the communication, being the
+	characteristics that the objects can take: informative, reporting or
+	interactive. In our case, meta-characteristic is: \emph{Fail
+		origin/cause}
+\end{itemize}
+
+\section{Steps}
+
+\begin{enumerate}
+	\item
+	Take the a group N as a reference (17 traces)
+	\item
+	Select an approach:
+	
+	\begin{itemize}
+		\item
+		\textbf{Empirical}: Select a trace and try to extract a
+		dimension and its characteristics. Add its
+		dimensions/characteristics to the table and classify the trace. Go
+		to next trace and try to classify with current
+		dimensions/characteristics. If can't, create new
+		dimensions/characteristics.
+		\item
+		\textbf{Conceptual}: Add conceptual dimensions/characteristics to the table
+		and classify each trace based on them. If you can't classify a
+		trace, create new dimensions/characteristics.
+	\end{itemize}
+	\item
+	If you create new dimensions with new characteristics, update traces
+	of Iteration N according to them.
+	\item
+	If all traces on Iteration N were classify, duplicate tab/sheet and
+	call it \emph{Iteration N+1}. Then, go to \emph{Iteration N+1} and
+	repeat steps 1-3.
+\end{enumerate}
