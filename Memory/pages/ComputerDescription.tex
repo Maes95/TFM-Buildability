@@ -9,3 +9,44 @@ Docker~\footnote{\url{https://www.docker.com}} is an open source software platfo
 Anaconda~\footnote{\url{https://www.anaconda.com/}} is a free and open distribution of Python and R languages, used in data science, machine learning and Big Data. We use this tool to manage the Python interpreter for the scripts that automate the tasks of the experiment inside a Docker container. In addition, it allows us to use Jupyter Notebook, an interactive tool for the browser that allows us to work easily with the data from the experiments.
 
 \section{Design and Implementation}
+
+In order to implement the process described in Chapter~\ref{sec:metodology} (Analysis process), the technologies presented above (Docker and Anaconda) have been used to build a Docker container with everything necessary to execute the experiment. 
+
+The structure of the folders is as follows:
+
+\begin{itemize}
+	\item \textit{analysis/} Folder shared between the host and the container where the results are stored.
+	\item \textit{configFiles/} Folder that includes the configuration of the execution of each project and its execution script.
+	\item \textit{proyects/} Folder that includes the projects to be analyzed as Git repositories, navigable throughout their commits history.
+	\item \textit{py/} Folder that includes Python scripts that provide the logic to execute all the project history builds and store the results.
+\end{itemize} 
+
+\begin{figure}[h!]
+	\begin{center}
+		\includegraphics[width=16cm]{img/AppDiagram}
+		\caption{Project structure}
+		\label{fig:app}
+	\end{center}
+\end{figure}
+
+Figure~\ref{fig:app} shows the structure of the tool built to carry out the experiment.
+
+Inside the container and in order to execute the \textbf{Check Build} phase, the following steps are followed:
+\begin{enumerate}
+	\item Python script $checkBuildHistory.py$ is launched, which will take the configuration file of a project together with its construction script.
+	\item The construction of the project is executed from the source code provided in the commit N.
+	\item The produced logs are stored, as well as the exit code of the construction process.
+	\item Repeat steps 2 and 3 until N=0 (the first commit of the project) is reached.
+\end{enumerate}
+
+To approach the \textbf{Log Analysis} phase, we will use Jupyter Notebook to interact with the data in a simple way. This tool will take the logs and exit codes of each commit, selecting those that have failed to make a grouping of the logs. Figure~\ref{fig:jupyter} shows a fragment of these notebooks where the frequency of the errors found in the failed builds of the Spring Framework project is obtained. 
+
+\begin{figure}[h!]
+	\begin{center}
+		\includegraphics[width=14cm]{img/Jupyter}
+		\caption{Screenshot of Jupyter Notebook - Log analysis for Spring Framework}
+		\label{fig:jupyter}
+	\end{center}
+\end{figure}
+
+
